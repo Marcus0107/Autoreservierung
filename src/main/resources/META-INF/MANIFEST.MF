@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: C:\Users\Marcus\Autoreservierung\src\main\java\Main
+Main-Class: Main
+
