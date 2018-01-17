@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Autoreservierung">
+    <output-path>$PROJECT_DIR$/out/artifacts/Autoreservierung</output-path>
+    <root id="archive" name="Autoreservierung.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Autoreservierung" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="Autoreservierung/web/Web" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/webapp" />
+    </root>
+  </artifact>
+</component>
