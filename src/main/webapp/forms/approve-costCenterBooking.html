@@ -1,0 +1,68 @@
+<form role="form" name="approve-costCenterBooking">
+
+  <div class="form-group">
+    <label for="startDate">Start Date:</label>
+    <input class="form-control"
+           cam-variable-type="String"
+           cam-variable-name="CONTRACT_START_DATE"
+           name="CONTRACT_START_DATE"
+           readonly="true" />
+  </div>
+
+  <div class="form-group">
+    <label for="endDate">End Date:</label>
+    <input class="form-control"
+           cam-variable-type="String"
+           cam-variable-name="CONTRACT_END_DATE"
+           name="CONTRACT_END_DATE"
+           readonly="true" />
+  </div>
+
+  <div class="input-group">
+    <label for="carType">Car Type:</label>
+    <div class="controls">
+      <select required
+              cam-variable-type="String"
+              cam-variable-name="CAR_TYPE"
+              ng-change="calculateBillingAmount()"
+              cam-choices="AVAILABLE_CAR_TYPES">
+        <option value="Kompacktklasse">Kompacktklasse</option>
+        <option value="Mittelklasse">Mittelklasse</option>
+        <option value="Limousine">Limousine</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="bookingAmount">Booking Amount:</label>
+    <input class="form-control"
+           cam-variable-type="Double"
+           cam-variable-name="BOOKING_AMOUNT"
+           ng-change="calculateBillingAmount()"
+           name="BOOKING_AMOUNT"
+           type="number"
+           />
+  </div>
+
+
+  <!-- date selector pop-up -->
+  <script cam-script type="text/form-script">
+    $scope.calculateBillingAmount = function() {
+        var form = $scope.approve-costCenterBooking;
+        if(form.CAR_TYPE == "Kompacktklasse") {
+          $scope.BOOKING_AMOUNT = 200*2;
+        } else if (form.CAR_TYPE == "Mittelklasse") {
+          $scope.BOOKING_AMOUNT = 300*2;
+        } else if (form.CAR_TYPE == "Limousine") {
+          $scope.BOOKING_AMOUNT = 450*2;
+        }
+        else{$scope.BOOKING_AMOUNT = 666;
+        }
+     }
+
+
+  </script>
+
+
+
+</form>

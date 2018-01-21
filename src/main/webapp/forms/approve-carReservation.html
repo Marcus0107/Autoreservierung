@@ -1,12 +1,4 @@
-<form name="approve-businessTrip">
-  <div class="form-group">
-    <label for="employeeId">Employee ID</label>
-    <input class="form-control"
-           cam-variable-type="String"
-           cam-variable-name="EMPLOYEE_ID"
-           name="employeeId"
-           readonly="true" />
-  </div>
+<form name="approve-carReservation">
 
   <div class="form-group">
     <label for="startDate">Start Date:</label>
@@ -38,12 +30,12 @@
 
 
   <div class="form-group">
-    <label for="approveTrip">Approve Business Trip:</label>
+    <label for="carInStock">Car in stock:</label>
     <select required
             cam-variable-type="Boolean"
-            cam-variable-name="TRIP_APPROVED" >
-      <option value=false checked>No</option>
-      <option value=true>Yes</option>
+            cam-variable-name="CAR_IN_STOCK" >
+      <option value=true checked>Yes</option>
+      <option value=false >No</option>
     </select>
   </div>
 

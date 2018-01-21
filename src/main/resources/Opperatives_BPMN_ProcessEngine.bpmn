@@ -5,21 +5,24 @@
     <bpmn:participant id="Participant_16ac324" name="Process Engine" processRef="Process_EngineID" />
     <bpmn:participant id="Participant_0hlcoa0" name="Mitarbeiter" processRef="Process_MitarbeiterID" />
     <bpmn:participant id="Participant_1f90gm9" name="Manager" processRef="Process_ManagerID" />
-    <bpmn:messageFlow id="MessageFlow_16m18ws" sourceRef="Task_1po7gvq" targetRef="StartEvent_Msg_FuhrparkPool" />
+    <bpmn:messageFlow id="MessageFlow_16m18ws" sourceRef="UserTask_Engine_AutoBereitstellen" targetRef="StartEvent_Msg_FuhrparkPool" />
     <bpmn:messageFlow id="MessageFlow_1hnyrwv" sourceRef="Task_Engine_BudgetPruefen" targetRef="StartEvent_Msg_ManagerPool" />
     <bpmn:messageFlow id="MessageFlow_1mpt0x9" sourceRef="UserTask_Manager_BudgetPruefen" targetRef="Task_Engine_BudgetPruefen" />
     <bpmn:messageFlow id="MessageFlow_0jd3skd" sourceRef="Task_0vw7l6n" targetRef="IntermediateCatchEvent_Msg_Infos" />
     <bpmn:messageFlow id="MessageFlow_05688he" sourceRef="Task_0uqxy1t" targetRef="Task_0vw7l6n" />
     <bpmn:messageFlow id="MessageFlow_16n02kc" sourceRef="SendTask_Engine_Abgelehnt" targetRef="IntermediateCatchEvent_Msg_Ablehnung" />
-    <bpmn:messageFlow id="MessageFlow_0jxub12" sourceRef="Task_1hq5zx6" targetRef="Task_1po7gvq" />
-    <bpmn:messageFlow id="MessageFlow_1ihs1ww" sourceRef="Task_0dejc3g" targetRef="IntermediateCatchEvent_Msg_AbrechnungAnforderung" />
+    <bpmn:messageFlow id="MessageFlow_0jxub12" sourceRef="EndEvent_Msg_Fuhrpark" targetRef="UserTask_Engine_AutoBereitstellen" />
+    <bpmn:messageFlow id="MessageFlow_1ihs1ww" sourceRef="SendTask_Mitarbeiter_ReisekostenabrAnfordern" targetRef="IntermediateCatchEvent_Msg_AbrechnungAnforderung" />
     <bpmn:messageFlow id="MessageFlow_02rro8t" sourceRef="SendTask_Engine_Bestaetigt" targetRef="IntermediateCatchEvent_Msg_Abholung" />
-    <bpmn:messageFlow id="MessageFlow_04blrb8" sourceRef="ServiceTask_Manager_AntrasstatusAendern" targetRef="IntermediateCatchEvent_Msg_InBearbeitung" />
+    <bpmn:messageFlow id="MessageFlow_04blrb8" sourceRef="ServiceTask_Manager_AntrasstatusAendern" targetRef="IntermediateCatchEvent_Msg_InBearbeitung">
+      <bpmn:documentation><![CDATA[
+]]></bpmn:documentation>
+    </bpmn:messageFlow>
     <bpmn:messageFlow id="MessageFlow_0fy6geh" sourceRef="UserTask_Mitarbeiter_AntragAusfuellen" targetRef="StartEvent_Msg_EnginePool" />
-    <bpmn:messageFlow id="MessageFlow_0h6txsr" sourceRef="Task_10pfkiy" targetRef="IntermediateCatchEvent_Msg_AbrechnungErhalten" />
+    <bpmn:messageFlow id="MessageFlow_0h6txsr" sourceRef="SendTask_SendTask_Engine_ReisekostenabrSenden" targetRef="IntermediateCatchEvent_Msg_AbrechnungErhalten" />
   </bpmn:collaboration>
   <bpmn:process id="Process_FuhrparkID" name="Process_Fuhrpark" isExecutable="true">
-    <bpmn:userTask id="Task_0pndefb" name="Autoverfügbarkeit prüfen">
+    <bpmn:userTask id="UserTask_Fuhrpark_Autoverfuegbarkeit" name="Autoverfügbarkeit prüfen" camunda:formKey="embedded:app:forms/approve-carReservation.html" camunda:assignee="demo">
       <bpmn:incoming>SequenceFlow_0avmobh</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0lvb4d6</bpmn:outgoing>
     </bpmn:userTask>
@@ -27,60 +30,65 @@
       <bpmn:outgoing>SequenceFlow_0avmobh</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_1iry00y" />
     </bpmn:startEvent>
-    <bpmn:userTask id="Task_0hd94uz" name="Auto reservieren">
-      <bpmn:incoming>SequenceFlow_0tqea2j</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0wkyl3k</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:task id="Task_1hq5zx6" name="Auto bereitstellen">
-      <bpmn:incoming>SequenceFlow_059lbcd</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_0wkyl3k</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0iruswl</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:userTask id="Task_04ebauj" name="Kostenstelle belasten">
-      <bpmn:incoming>SequenceFlow_0iruswl</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_17zufb5</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:endEvent id="EndEvent_0lw7a8f" name="Auto bereitgestellt">
-      <bpmn:incoming>SequenceFlow_17zufb5</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:subProcess id="Task_0dodlkm" name="externe Autoanmietung">
-      <bpmn:incoming>SequenceFlow_1a36wh8</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_059lbcd</bpmn:outgoing>
-    </bpmn:subProcess>
-    <bpmn:sequenceFlow id="SequenceFlow_0avmobh" sourceRef="StartEvent_Msg_FuhrparkPool" targetRef="Task_0pndefb" />
-    <bpmn:sequenceFlow id="SequenceFlow_0wkyl3k" sourceRef="Task_0hd94uz" targetRef="Task_1hq5zx6" />
-    <bpmn:sequenceFlow id="SequenceFlow_059lbcd" sourceRef="Task_0dodlkm" targetRef="Task_1hq5zx6" />
-    <bpmn:sequenceFlow id="SequenceFlow_0iruswl" sourceRef="Task_1hq5zx6" targetRef="Task_04ebauj" />
-    <bpmn:sequenceFlow id="SequenceFlow_17zufb5" sourceRef="Task_04ebauj" targetRef="EndEvent_0lw7a8f" />
-    <bpmn:exclusiveGateway id="ExclusiveGateway_1heiqur" name="Verfügbar?">
+    <bpmn:sequenceFlow id="SequenceFlow_0avmobh" sourceRef="StartEvent_Msg_FuhrparkPool" targetRef="UserTask_Fuhrpark_Autoverfuegbarkeit" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1heiqur" name="Vorrätig?">
       <bpmn:incoming>SequenceFlow_0lvb4d6</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0tqea2j</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1a36wh8</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0lvb4d6" sourceRef="Task_0pndefb" targetRef="ExclusiveGateway_1heiqur" />
+    <bpmn:sequenceFlow id="SequenceFlow_0lvb4d6" sourceRef="UserTask_Fuhrpark_Autoverfuegbarkeit" targetRef="ExclusiveGateway_1heiqur" />
     <bpmn:sequenceFlow id="SequenceFlow_0tqea2j" name="Ja" sourceRef="ExclusiveGateway_1heiqur" targetRef="Task_0hd94uz">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${CAR_IN_STOCK}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1a36wh8" name="Nein" sourceRef="ExclusiveGateway_1heiqur" targetRef="Task_0dodlkm">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${not CAR_IN_STOCK}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:textAnnotation id="TextAnnotation_1sqghds">
-      <bpmn:text>Fuhrparksystem</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:textAnnotation id="TextAnnotation_0sawc8m">
-      <bpmn:text>Fuhrparksystem</bpmn:text>
-    </bpmn:textAnnotation>
+    <bpmn:sequenceFlow id="SequenceFlow_0g2ddee" sourceRef="Task_0hd94uz" targetRef="UserTask_Fuhrpark_KostenstelleBelasten" />
+    <bpmn:sequenceFlow id="SequenceFlow_1d1qivo" sourceRef="Task_0dodlkm" targetRef="UserTask_Fuhrpark_KostenstelleBelasten" />
+    <bpmn:sequenceFlow id="SequenceFlow_1u89tos" sourceRef="UserTask_Fuhrpark_KostenstelleBelasten" targetRef="Task_1hq5zx6" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ulic8v" sourceRef="Task_1hq5zx6" targetRef="EndEvent_Msg_Fuhrpark" />
+    <bpmn:userTask id="UserTask_Fuhrpark_KostenstelleBelasten" name="Kostenstelle belasten" camunda:formKey="embedded:app:forms/approve-costCenterBooking.html" camunda:assignee="demo">
+      <bpmn:incoming>SequenceFlow_0g2ddee</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1d1qivo</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1u89tos</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:task id="Task_1hq5zx6" name="Auto bereitstellen">
+      <bpmn:incoming>SequenceFlow_1u89tos</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ulic8v</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_0hd94uz" name="Auto reservieren">
+      <bpmn:incoming>SequenceFlow_0tqea2j</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0g2ddee</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:subProcess id="Task_0dodlkm" name="externe Autoanmietung">
+      <bpmn:incoming>SequenceFlow_1a36wh8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1d1qivo</bpmn:outgoing>
+    </bpmn:subProcess>
+    <bpmn:endEvent id="EndEvent_Msg_Fuhrpark" name="Auto bereitgestellt">
+      <bpmn:incoming>SequenceFlow_0ulic8v</bpmn:incoming>
+      <bpmn:messageEventDefinition messageRef="Message_1iry00y" camunda:class="MessageFlow" />
+    </bpmn:endEvent>
+    <bpmn:association id="Association_0d61sfb" sourceRef="UserTask_Fuhrpark_Autoverfuegbarkeit" targetRef="TextAnnotation_0sawc8m" />
+    <bpmn:association id="Association_02wt2rv" sourceRef="Task_0hd94uz" targetRef="TextAnnotation_1sqghds" />
+    <bpmn:association id="Association_10hcthh" sourceRef="UserTask_Fuhrpark_KostenstelleBelasten" targetRef="TextAnnotation_1l7pk3t" />
     <bpmn:textAnnotation id="TextAnnotation_1l7pk3t">
       <bpmn:text>Verwaltungs-system</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_0d61sfb" sourceRef="Task_0pndefb" targetRef="TextAnnotation_0sawc8m" />
-    <bpmn:association id="Association_02wt2rv" sourceRef="Task_0hd94uz" targetRef="TextAnnotation_1sqghds" />
-    <bpmn:association id="Association_10hcthh" sourceRef="Task_04ebauj" targetRef="TextAnnotation_1l7pk3t" />
+    <bpmn:association id="Association_0t4bwbu" sourceRef="UserTask_Fuhrpark_Autoverfuegbarkeit" targetRef="TextAnnotation_0xn53tl" />
+    <bpmn:textAnnotation id="TextAnnotation_0sawc8m">
+      <bpmn:text>Fuhrparksystem</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_0xn53tl">
+      <bpmn:text>Verwaltungs-system</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_1sqghds">
+      <bpmn:text>Fuhrparksystem</bpmn:text>
+    </bpmn:textAnnotation>
   </bpmn:process>
   <bpmn:process id="Process_EngineID" name="Process_Engine" isExecutable="true">
     <bpmn:laneSet>
       <bpmn:lane id="Lane_0rq3ckw" name="Fuhrpark">
-        <bpmn:flowNodeRef>Task_1po7gvq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_Engine_AutoBereitstellen</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1s4avza" name="Automatisch">
         <bpmn:flowNodeRef>SendTask_Engine_Abgelehnt</bpmn:flowNodeRef>
@@ -91,7 +99,7 @@
         <bpmn:flowNodeRef>Task_1ocuci2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_05108cj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateCatchEvent_Msg_AbrechnungAnforderung</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_10pfkiy</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_SendTask_Engine_ReisekostenabrSenden</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_11wu4eq" name="Manager">
         <bpmn:flowNodeRef>Task_Engine_BudgetPruefen</bpmn:flowNodeRef>
@@ -101,14 +109,14 @@
     <bpmn:sequenceFlow id="SequenceFlow_1mvm8xv" name="Nein" sourceRef="ExclusiveGateway_03q5cce" targetRef="SendTask_Engine_Abgelehnt">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${not TRIP_APPROVED}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0iadlnu" name="Ja" sourceRef="ExclusiveGateway_03q5cce" targetRef="Task_1po7gvq">
+    <bpmn:sequenceFlow id="SequenceFlow_0iadlnu" name="Ja" sourceRef="ExclusiveGateway_03q5cce" targetRef="UserTask_Engine_AutoBereitstellen">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${TRIP_APPROVED}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:startEvent id="StartEvent_Msg_EnginePool" name="Eintrag eingegangen">
       <bpmn:outgoing>SequenceFlow_0di9igw</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_04t5ni4" />
     </bpmn:startEvent>
-    <bpmn:sendTask id="SendTask_Engine_Abgelehnt" name="Ablehnung senden" camunda:delegateExpression="&#34;Abgelehnt&#34;">
+    <bpmn:sendTask id="SendTask_Engine_Abgelehnt" name="Ablehnung senden" camunda:class="MessageFlow">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:outputParameter name="Output_264h5e0" />
@@ -117,7 +125,10 @@
       <bpmn:incoming>SequenceFlow_1mvm8xv</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1uzsx4b</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:userTask id="Task_1po7gvq" name="Auto bereitstellen">
+    <bpmn:userTask id="UserTask_Engine_AutoBereitstellen" name="Auto bereitstellen">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="MessageFlow" event="start" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0iadlnu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0w6h04k</bpmn:outgoing>
     </bpmn:userTask>
@@ -127,12 +138,12 @@
       <bpmn:outgoing>SequenceFlow_1mvm8xv</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_1uzsx4b" sourceRef="SendTask_Engine_Abgelehnt" targetRef="EndEvent_1nz3t0n" />
-    <bpmn:sequenceFlow id="SequenceFlow_0w6h04k" sourceRef="Task_1po7gvq" targetRef="SendTask_Engine_Bestaetigt" />
+    <bpmn:sequenceFlow id="SequenceFlow_0w6h04k" sourceRef="UserTask_Engine_AutoBereitstellen" targetRef="SendTask_Engine_Bestaetigt" />
     <bpmn:sequenceFlow id="SequenceFlow_0b5brx1" sourceRef="SendTask_Engine_Bestaetigt" targetRef="IntermediateCatchEvent_Msg_AbrechnungAnforderung" />
     <bpmn:endEvent id="EndEvent_1nz3t0n" name="Antrag abgelehnt">
       <bpmn:incoming>SequenceFlow_1uzsx4b</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sendTask id="SendTask_Engine_Bestaetigt" name="Bestätigung senden" camunda:delegateExpression="&#34;ToDo: Generate Bestätigung&#34;">
+    <bpmn:sendTask id="SendTask_Engine_Bestaetigt" name="Bestätigung senden" camunda:class="MessageFlow">
       <bpmn:incoming>SequenceFlow_0w6h04k</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0b5brx1</bpmn:outgoing>
     </bpmn:sendTask>
@@ -144,14 +155,14 @@
       <bpmn:incoming>SequenceFlow_19qo0te</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0e3wqx8" sourceRef="IntermediateCatchEvent_Msg_AbrechnungAnforderung" targetRef="Task_1ocuci2" />
-    <bpmn:sequenceFlow id="SequenceFlow_0nt5xq0" sourceRef="Task_1ocuci2" targetRef="Task_10pfkiy" />
-    <bpmn:sequenceFlow id="SequenceFlow_19qo0te" sourceRef="Task_10pfkiy" targetRef="EndEvent_05108cj" />
+    <bpmn:sequenceFlow id="SequenceFlow_0nt5xq0" sourceRef="Task_1ocuci2" targetRef="SendTask_SendTask_Engine_ReisekostenabrSenden" />
+    <bpmn:sequenceFlow id="SequenceFlow_19qo0te" sourceRef="SendTask_SendTask_Engine_ReisekostenabrSenden" targetRef="EndEvent_05108cj" />
     <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_Msg_AbrechnungAnforderung" name="Reisekosten-abrechnung angefordert">
       <bpmn:incoming>SequenceFlow_0b5brx1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0e3wqx8</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_1h7lkmm" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sendTask id="Task_10pfkiy" name="Reisekosten-abrechnung senden" camunda:delegateExpression="&#34;ToDo: Send Reisekosenabrechnung&#34;">
+    <bpmn:sendTask id="SendTask_SendTask_Engine_ReisekostenabrSenden" name="Reisekosten-abrechnung senden" camunda:delegateExpression="&#34;ToDo: Send Reisekosenabrechnung&#34;">
       <bpmn:incoming>SequenceFlow_0nt5xq0</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_19qo0te</bpmn:outgoing>
     </bpmn:sendTask>
@@ -171,7 +182,7 @@
         <bpmn:flowNodeRef>IntermediateCatchEvent_0fmd4d9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_10sgh0h</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0i8ulqx</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>IntermediateThrowEvent_0qkkki0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateThrowEvent_DauerGeschaeftsreise</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_1822ztw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0uqxy1t</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateCatchEvent_Msg_Infos</bpmn:flowNodeRef>
@@ -179,8 +190,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_1jw05hb" name="Verwaltungssystem">
         <bpmn:flowNodeRef>Task_0a63k5p</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0dejc3g</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1mk12ql</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_Mitarbeiter_Reisedaten</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateCatchEvent_Msg_Abholung</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateCatchEvent_Msg_Ablehnung</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_12pxlhc</bpmn:flowNodeRef>
@@ -189,20 +199,21 @@
         <bpmn:flowNodeRef>IntermediateCatchEvent_Msg_InBearbeitung</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EventBasedGateway_Mitarbeiter_2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>UserTask_Mitarbeiter_AntragAusfuellen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_Mitarbeiter_ReisekostenabrAnfordern</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:sequenceFlow id="SequenceFlow_0cmp2v0" name="Nein" sourceRef="ExclusiveGateway_0uqw1h0" targetRef="Task_1mk12ql">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Nein</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_0cmp2v0" name="Nein" sourceRef="ExclusiveGateway_0uqw1h0" targetRef="UserTask_Mitarbeiter_Reisedaten">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${TRIP_TOREVIEW}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0b72ux0" sourceRef="Task_1mk12ql" targetRef="Task_0dejc3g" />
-    <bpmn:sequenceFlow id="SequenceFlow_1d6i5rx" name="Ja" sourceRef="ExclusiveGateway_0uqw1h0" targetRef="Task_0dejc3g">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Ja</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_0b72ux0" sourceRef="UserTask_Mitarbeiter_Reisedaten" targetRef="SendTask_Mitarbeiter_ReisekostenabrAnfordern" />
+    <bpmn:sequenceFlow id="SequenceFlow_1d6i5rx" name="Ja" sourceRef="ExclusiveGateway_0uqw1h0" targetRef="SendTask_Mitarbeiter_ReisekostenabrAnfordern">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${not TRIP_TOREVIEW}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_12ula1l" sourceRef="Task_0dejc3g" targetRef="IntermediateCatchEvent_Msg_AbrechnungErhalten" />
+    <bpmn:sequenceFlow id="SequenceFlow_12ula1l" sourceRef="SendTask_Mitarbeiter_ReisekostenabrAnfordern" targetRef="IntermediateCatchEvent_Msg_AbrechnungErhalten" />
     <bpmn:sequenceFlow id="SequenceFlow_0jsyk9l" sourceRef="IntermediateCatchEvent_Msg_AbrechnungErhalten" targetRef="EndEvent_1822ztw" />
     <bpmn:sequenceFlow id="SequenceFlow_03hhnmd" sourceRef="Task_0a63k5p" targetRef="EndEvent_12pxlhc" />
-    <bpmn:sequenceFlow id="SequenceFlow_1hvk70k" sourceRef="IntermediateThrowEvent_0qkkki0" targetRef="ExclusiveGateway_0uqw1h0" />
-    <bpmn:sequenceFlow id="SequenceFlow_1p2nh7f" sourceRef="Task_0i8ulqx" targetRef="IntermediateThrowEvent_0qkkki0" />
+    <bpmn:sequenceFlow id="SequenceFlow_1hvk70k" sourceRef="IntermediateThrowEvent_DauerGeschaeftsreise" targetRef="ExclusiveGateway_0uqw1h0" />
+    <bpmn:sequenceFlow id="SequenceFlow_1p2nh7f" sourceRef="Task_0i8ulqx" targetRef="IntermediateThrowEvent_DauerGeschaeftsreise" />
     <bpmn:sequenceFlow id="SequenceFlow_0w3zt2t" sourceRef="IntermediateCatchEvent_Msg_Infos" targetRef="Task_0uqxy1t" />
     <bpmn:sequenceFlow id="SequenceFlow_0ywn280" sourceRef="Task_10sgh0h" targetRef="Task_0i8ulqx" />
     <bpmn:sequenceFlow id="SequenceFlow_0r4i285" sourceRef="IntermediateCatchEvent_0fmd4d9" targetRef="Task_10sgh0h" />
@@ -211,20 +222,15 @@
     <bpmn:sequenceFlow id="SequenceFlow_0t3tdy5" sourceRef="EventBasedGateway_Mitarbeiter_2" targetRef="IntermediateCatchEvent_Msg_Ablehnung" />
     <bpmn:sequenceFlow id="SequenceFlow_0apawj8" sourceRef="IntermediateCatchEvent_Msg_Abholung" targetRef="IntermediateCatchEvent_0fmd4d9" />
     <bpmn:sequenceFlow id="SequenceFlow_17zlafz" sourceRef="EventBasedGateway_Mitarbeiter_2" targetRef="IntermediateCatchEvent_Msg_Abholung" />
-    <bpmn:userTask id="Task_1mk12ql" name="Reisedaten korregieren">
+    <bpmn:userTask id="UserTask_Mitarbeiter_Reisedaten" name="Reisedaten korregieren" camunda:formKey="embedded:app:forms/review-businessTrip.html" camunda:assignee="demo">
       <bpmn:incoming>SequenceFlow_0cmp2v0</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0b72ux0</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0uqw1h0" name="Verlief Geschäftsreis wie geplant?">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0uqw1h0" name="Geplater Verlauf?">
       <bpmn:incoming>SequenceFlow_1hvk70k</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0cmp2v0</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1d6i5rx</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_0dejc3g" name="Reisekosten-abrechnung anfordern">
-      <bpmn:incoming>SequenceFlow_1d6i5rx</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_0b72ux0</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_12ula1l</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:endEvent id="EndEvent_12pxlhc" name="Auto abgelehnt">
       <bpmn:incoming>SequenceFlow_03hhnmd</bpmn:incoming>
     </bpmn:endEvent>
@@ -260,7 +266,10 @@
       <bpmn:incoming>SequenceFlow_0ywn280</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1p2nh7f</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_0qkkki0" name="Dauer der Geschäftsreise">
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_DauerGeschaeftsreise" name="Dauer der Geschäftsreise">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="MessageFlow" event="end" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1p2nh7f</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1hvk70k</bpmn:outgoing>
       <bpmn:timerEventDefinition>
@@ -274,7 +283,7 @@
       <bpmn:incoming>SequenceFlow_0w3zt2t</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17y1gza</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:eventBasedGateway id="EventBasedGateway_Mitarbeiter_1" camunda:asyncBefore="true">
+    <bpmn:eventBasedGateway id="EventBasedGateway_Mitarbeiter_1">
       <bpmn:incoming>SequenceFlow_17y1gza</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1iyxxol</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0uml0w6</bpmn:outgoing>
@@ -292,13 +301,13 @@
       <bpmn:messageEventDefinition messageRef="Message_0dmyh2e" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="SequenceFlow_197kytw" sourceRef="IntermediateCatchEvent_Msg_InBearbeitung" targetRef="EventBasedGateway_Mitarbeiter_2" />
-    <bpmn:eventBasedGateway id="EventBasedGateway_Mitarbeiter_2" name="EventBasedGateway_Mitarbeiter_1">
+    <bpmn:eventBasedGateway id="EventBasedGateway_Mitarbeiter_2">
       <bpmn:incoming>SequenceFlow_197kytw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17zlafz</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0t3tdy5</bpmn:outgoing>
     </bpmn:eventBasedGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0rncoos" sourceRef="EventBasedGateway_Mitarbeiter_1" targetRef="IntermediateCatchEvent_Msg_InBearbeitung" />
-    <bpmn:userTask id="UserTask_Mitarbeiter_AntragAusfuellen" name="Antrag ausfüllen" camunda:formKey="embedded:app:forms/request-businessTrip.html">
+    <bpmn:userTask id="UserTask_Mitarbeiter_AntragAusfuellen" name="Antrag ausfüllen" camunda:formKey="embedded:app:forms/request-businessTrip.html" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:executionListener class="MessageFlow" event="end" />
       </bpmn:extensionElements>
@@ -312,6 +321,11 @@
       <bpmn:outgoing>SequenceFlow_0jsyk9l</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_16vnqa4" />
     </bpmn:intermediateCatchEvent>
+    <bpmn:sendTask id="SendTask_Mitarbeiter_ReisekostenabrAnfordern" name="Reisekosten-abrechnung anfordern" camunda:class="MessageFlow">
+      <bpmn:incoming>SequenceFlow_1d6i5rx</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0b72ux0</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_12ula1l</bpmn:outgoing>
+    </bpmn:sendTask>
   </bpmn:process>
   <bpmn:process id="Process_ManagerID" name="Process_Manager" isExecutable="true">
     <bpmn:laneSet>
@@ -347,7 +361,7 @@
     <bpmn:endEvent id="EndEvent_14xxvmu" name="Buget geprüft">
       <bpmn:incoming>SequenceFlow_043l1i9</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="UserTask_Manager_BudgetPruefen" name="Budget überprüfen" camunda:formKey="embedded:app:forms/approve-businessTrip.html">
+    <bpmn:userTask id="UserTask_Manager_BudgetPruefen" name="Budget überprüfen" camunda:formKey="embedded:app:forms/approve-businessTrip.html" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:executionListener class="MessageFlow" event="end" />
       </bpmn:extensionElements>
@@ -365,11 +379,14 @@
       <bpmn:incoming>SequenceFlow_09c8do7</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0fbtzdw</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:task id="Task_Manager_AntragSichten" name="Antrag sichten">
+    <bpmn:sequenceFlow id="SequenceFlow_0fbtzdw" sourceRef="ServiceTask_Manager_AntrasstatusAendern" targetRef="UserTask_Manager_BudgetPruefen" />
+    <bpmn:userTask id="Task_Manager_AntragSichten" name="Antrag sichten" camunda:formKey="embedded:app:forms/view-businessTrip.html" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0rey05x</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0xe3bb2</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_0fbtzdw" sourceRef="ServiceTask_Manager_AntrasstatusAendern" targetRef="UserTask_Manager_BudgetPruefen" />
+    </bpmn:userTask>
   </bpmn:process>
   <bpmn:message id="Message_140ioqb" name="Message_Engine_BudgetPruefen" />
   <bpmn:message id="Message_04t5ni4" name="Message1" />
@@ -380,7 +397,7 @@
   <bpmn:message id="Message_1lk7kbj" name="Message_Engine_Reisekostenabrechnung" />
   <bpmn:message id="Message_0dmyh2e" name="Message_Manager_AntragsstatusAendern" />
   <bpmn:message id="Message_1iry00y" name="Message_Engine_AutoBereitstellen" />
-  <bpmn:message id="Message_01p34ne" name="Message_2q61h51" />
+  <bpmn:message id="Message_01p34ne" />
   <bpmn:message id="Message_16vnqa4" name="Message_Engine_Reisekostenabrechnung" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_15smo9x">
@@ -400,23 +417,7 @@
           <dc:Bounds x="733" y="-220" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_0lw7a8f_di" bpmnElement="EndEvent_0lw7a8f">
-        <dc:Bounds x="1639" y="-217" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1613" y="-177" width="88" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0iruswl_di" bpmnElement="SequenceFlow_0iruswl">
-        <di:waypoint xsi:type="dc:Point" x="1390" y="-199" />
-        <di:waypoint xsi:type="dc:Point" x="1475" y="-199" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1387.5" y="-220" width="90" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_0tzd1y8_di" bpmnElement="Task_0hd94uz">
-        <dc:Bounds x="1110" y="-310" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0mmptyu_di" bpmnElement="Task_0pndefb">
+      <bpmndi:BPMNShape id="UserTask_0mmptyu_di" bpmnElement="UserTask_Fuhrpark_Autoverfuegbarkeit">
         <dc:Bounds x="814" y="-239" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_03q5cce_di" bpmnElement="ExclusiveGateway_03q5cce" isMarkerVisible="true">
@@ -453,8 +454,8 @@
           <dc:Bounds x="799" y="-68" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_1wt73x6_di" bpmnElement="Task_04ebauj">
-        <dc:Bounds x="1475" y="-239" width="100" height="80" />
+      <bpmndi:BPMNShape id="UserTask_1wt73x6_di" bpmnElement="UserTask_Fuhrpark_KostenstelleBelasten">
+        <dc:Bounds x="1294" y="-239" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_16ac324_di" bpmnElement="Participant_16ac324">
         <dc:Bounds x="400" y="4" width="1653" height="608" />
@@ -519,7 +520,7 @@
       <bpmndi:BPMNShape id="EventBasedGateway_0nfmlvp_di" bpmnElement="EventBasedGateway_Mitarbeiter_2">
         <dc:Bounds x="835" y="1302" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="814" y="1356" width="0" height="12" />
+          <dc:Bounds x="766" y="1384" width="85" height="36" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_0z7xfcd_di" bpmnElement="StartEvent_Geschaeftsreise">
@@ -703,44 +704,19 @@
           <dc:Bounds x="1901" y="736.5" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_0thhk7t_di" bpmnElement="Task_1po7gvq">
+      <bpmndi:BPMNShape id="UserTask_0thhk7t_di" bpmnElement="UserTask_Engine_AutoBereitstellen">
         <dc:Bounds x="941" y="27" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_0l5z90t_di" bpmnElement="Task_1hq5zx6">
-        <dc:Bounds x="1290" y="-239" width="100" height="80" />
+        <dc:Bounds x="1467" y="-239" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_0jxub12_di" bpmnElement="MessageFlow_0jxub12">
-        <di:waypoint xsi:type="dc:Point" x="1340" y="-159" />
-        <di:waypoint xsi:type="dc:Point" x="1340" y="-50" />
+        <di:waypoint xsi:type="dc:Point" x="1648" y="-180" />
+        <di:waypoint xsi:type="dc:Point" x="1648" y="-50" />
         <di:waypoint xsi:type="dc:Point" x="1003" y="-50" />
         <di:waypoint xsi:type="dc:Point" x="1003" y="27" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1171.5" y="-71" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_17zufb5_di" bpmnElement="SequenceFlow_17zufb5">
-        <di:waypoint xsi:type="dc:Point" x="1575" y="-199" />
-        <di:waypoint xsi:type="dc:Point" x="1639" y="-199" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1607" y="-220" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_059lbcd_di" bpmnElement="SequenceFlow_059lbcd">
-        <di:waypoint xsi:type="dc:Point" x="1210" y="-138" />
-        <di:waypoint xsi:type="dc:Point" x="1250" y="-138" />
-        <di:waypoint xsi:type="dc:Point" x="1250" y="-199" />
-        <di:waypoint xsi:type="dc:Point" x="1290" y="-199" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1265" y="-174.5" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0wkyl3k_di" bpmnElement="SequenceFlow_0wkyl3k">
-        <di:waypoint xsi:type="dc:Point" x="1210" y="-270" />
-        <di:waypoint xsi:type="dc:Point" x="1250" y="-270" />
-        <di:waypoint xsi:type="dc:Point" x="1250" y="-199" />
-        <di:waypoint xsi:type="dc:Point" x="1290" y="-199" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1265" y="-240.5" width="0" height="12" />
+          <dc:Bounds x="1280.5" y="-71" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_1nz3t0n_di" bpmnElement="EndEvent_1nz3t0n">
@@ -757,7 +733,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="SubProcess_1oluo6r_di" bpmnElement="Task_0dodlkm">
-        <dc:Bounds x="1110" y="-178" width="100" height="80" />
+        <dc:Bounds x="1076" y="-178" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_1ji7p1u_di" bpmnElement="Task_1ocuci2">
         <dc:Bounds x="1544" y="160" width="100" height="80" />
@@ -783,14 +759,11 @@
           <dc:Bounds x="1401" y="1567" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="IntermediateCatchEvent_15qcrvc_di" bpmnElement="IntermediateThrowEvent_0qkkki0">
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_15qcrvc_di" bpmnElement="IntermediateThrowEvent_DauerGeschaeftsreise">
         <dc:Bounds x="1409" y="1555" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1389" y="1595" width="75" height="24" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_1gwqdoo_di" bpmnElement="Task_0dejc3g">
-        <dc:Bounds x="1576" y="1229" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="IntermediateCatchEvent_1dmmbnd_di" bpmnElement="IntermediateCatchEvent_Msg_AbrechnungAnforderung">
         <dc:Bounds x="1451" y="182" width="36" height="36" />
@@ -802,9 +775,9 @@
         <di:waypoint xsi:type="dc:Point" x="1626" y="1229" />
         <di:waypoint xsi:type="dc:Point" x="1626" y="648" />
         <di:waypoint xsi:type="dc:Point" x="1467" y="648" />
-        <di:waypoint xsi:type="dc:Point" x="1467" y="219" />
+        <di:waypoint xsi:type="dc:Point" x="1467" y="217" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1546.5" y="627" width="0" height="12" />
+          <dc:Bounds x="1501.5" y="627" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0e3wqx8_di" bpmnElement="SequenceFlow_0e3wqx8">
@@ -823,7 +796,7 @@
           <dc:Bounds x="1677" y="179" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="SendTask_0z2p7xh_di" bpmnElement="Task_10pfkiy">
+      <bpmndi:BPMNShape id="SendTask_0z2p7xh_di" bpmnElement="SendTask_SendTask_Engine_ReisekostenabrSenden">
         <dc:Bounds x="1710" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_05108cj_di" bpmnElement="EndEvent_05108cj">
@@ -904,30 +877,32 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_1sqghds_di" bpmnElement="TextAnnotation_1sqghds">
-        <dc:Bounds x="1110" y="-369.45180023228806" width="99.99156545209176" height="29.984817813765183" />
+        <dc:Bounds x="1076" y="-369" width="100" height="30" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_02wt2rv_di" bpmnElement="Association_02wt2rv">
-        <di:waypoint xsi:type="dc:Point" x="1160" y="-310" />
-        <di:waypoint xsi:type="dc:Point" x="1160" y="-339" />
+        <di:waypoint xsi:type="dc:Point" x="1126" y="-310" />
+        <di:waypoint xsi:type="dc:Point" x="1126" y="-339" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0sawc8m_di" bpmnElement="TextAnnotation_0sawc8m">
-        <dc:Bounds x="814" y="-315.45180023228806" width="99.99274099883856" height="29.997822299651567" />
+        <dc:Bounds x="881" y="-330" width="100" height="30" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0d61sfb_di" bpmnElement="Association_0d61sfb">
         <di:waypoint xsi:type="dc:Point" x="864" y="-239" />
-        <di:waypoint xsi:type="dc:Point" x="864" y="-285" />
+        <di:waypoint xsi:type="dc:Point" x="864" y="-278" />
+        <di:waypoint xsi:type="dc:Point" x="931" y="-278" />
+        <di:waypoint xsi:type="dc:Point" x="931" y="-300" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_1l7pk3t_di" bpmnElement="TextAnnotation_1l7pk3t">
-        <dc:Bounds x="1475" y="-306.45180023228806" width="99.99156545209176" height="41.79318488529015" />
+        <dc:Bounds x="1294" y="-321" width="100" height="42" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_10hcthh_di" bpmnElement="Association_10hcthh">
-        <di:waypoint xsi:type="dc:Point" x="1525" y="-239" />
-        <di:waypoint xsi:type="dc:Point" x="1525" y="-265" />
+        <di:waypoint xsi:type="dc:Point" x="1344" y="-239" />
+        <di:waypoint xsi:type="dc:Point" x="1344" y="-279" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_0uqw1h0_di" bpmnElement="ExclusiveGateway_0uqw1h0" isMarkerVisible="true">
         <dc:Bounds x="1460.9814169570268" y="1301.706155632985" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1383" y="1284" width="88" height="36" />
+          <dc:Bounds x="1518" y="1321" width="85" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1hvk70k_di" bpmnElement="SequenceFlow_1hvk70k">
@@ -958,10 +933,10 @@
         <di:waypoint xsi:type="dc:Point" x="1626" y="1362" />
         <di:waypoint xsi:type="dc:Point" x="1626" y="1309" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1641" y="1329.5" width="0" height="12" />
+          <dc:Bounds x="1596" y="1329.5" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_1sn5kdy_di" bpmnElement="Task_1mk12ql">
+      <bpmndi:BPMNShape id="UserTask_1sn5kdy_di" bpmnElement="UserTask_Mitarbeiter_Reisedaten">
         <dc:Bounds x="1576" y="1362" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EventBasedGateway_0x0hdvq_di" bpmnElement="EventBasedGateway_Mitarbeiter_1">
@@ -1038,7 +1013,7 @@
       <bpmndi:BPMNShape id="ExclusiveGateway_1heiqur_di" bpmnElement="ExclusiveGateway_1heiqur" isMarkerVisible="true">
         <dc:Bounds x="950.862950058072" y="-224" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1011" y="-205" width="55" height="12" />
+          <dc:Bounds x="1016" y="-205" width="45" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0lvb4d6_di" bpmnElement="SequenceFlow_0lvb4d6">
@@ -1051,7 +1026,7 @@
       <bpmndi:BPMNEdge id="SequenceFlow_0tqea2j_di" bpmnElement="SequenceFlow_0tqea2j">
         <di:waypoint xsi:type="dc:Point" x="976" y="-224" />
         <di:waypoint xsi:type="dc:Point" x="976" y="-270" />
-        <di:waypoint xsi:type="dc:Point" x="1110" y="-270" />
+        <di:waypoint xsi:type="dc:Point" x="1076" y="-270" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="985" y="-253" width="12" height="12" />
         </bpmndi:BPMNLabel>
@@ -1059,7 +1034,7 @@
       <bpmndi:BPMNEdge id="SequenceFlow_1a36wh8_di" bpmnElement="SequenceFlow_1a36wh8">
         <di:waypoint xsi:type="dc:Point" x="976" y="-174" />
         <di:waypoint xsi:type="dc:Point" x="976" y="-138" />
-        <di:waypoint xsi:type="dc:Point" x="1110" y="-138" />
+        <di:waypoint xsi:type="dc:Point" x="1076" y="-138" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="980" y="-162" width="22" height="12" />
         </bpmndi:BPMNLabel>
@@ -1111,14 +1086,11 @@
         <di:waypoint xsi:type="dc:Point" x="821" y="885" />
         <di:waypoint xsi:type="dc:Point" x="868" y="885" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="844.5" y="864" width="0" height="12" />
+          <dc:Bounds x="799.5" y="864" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_1f8yfiz_di" bpmnElement="ServiceTask_Manager_AntrasstatusAendern">
         <dc:Bounds x="996" y="737" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0mtk9bb_di" bpmnElement="Task_Manager_AntragSichten">
-        <dc:Bounds x="721" y="845" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0fbtzdw_di" bpmnElement="SequenceFlow_0fbtzdw">
         <di:waypoint xsi:type="dc:Point" x="1096" y="777" />
@@ -1127,6 +1099,62 @@
           <dc:Bounds x="1097" y="756" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1yvs8dt_di" bpmnElement="Task_Manager_AntragSichten">
+        <dc:Bounds x="721" y="845" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1tpm7oc_di" bpmnElement="Task_0hd94uz">
+        <dc:Bounds x="1076" y="-310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0g2ddee_di" bpmnElement="SequenceFlow_0g2ddee">
+        <di:waypoint xsi:type="dc:Point" x="1176" y="-270" />
+        <di:waypoint xsi:type="dc:Point" x="1247" y="-270" />
+        <di:waypoint xsi:type="dc:Point" x="1247" y="-199" />
+        <di:waypoint xsi:type="dc:Point" x="1294" y="-199" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1262" y="-240.5" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1d1qivo_di" bpmnElement="SequenceFlow_1d1qivo">
+        <di:waypoint xsi:type="dc:Point" x="1176" y="-138" />
+        <di:waypoint xsi:type="dc:Point" x="1247" y="-138" />
+        <di:waypoint xsi:type="dc:Point" x="1247" y="-199" />
+        <di:waypoint xsi:type="dc:Point" x="1294" y="-199" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1262" y="-174.5" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1u89tos_di" bpmnElement="SequenceFlow_1u89tos">
+        <di:waypoint xsi:type="dc:Point" x="1394" y="-199" />
+        <di:waypoint xsi:type="dc:Point" x="1467" y="-199" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1430.5" y="-220" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ulic8v_di" bpmnElement="SequenceFlow_0ulic8v">
+        <di:waypoint xsi:type="dc:Point" x="1567" y="-199" />
+        <di:waypoint xsi:type="dc:Point" x="1630" y="-199" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1598.5" y="-220" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0xn53tl_di" bpmnElement="TextAnnotation_0xn53tl">
+        <dc:Bounds x="732.5447154471544" y="-336" width="99.99274099883856" height="41.81184668989547" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0t4bwbu_di" bpmnElement="Association_0t4bwbu">
+        <di:waypoint xsi:type="dc:Point" x="864" y="-239" />
+        <di:waypoint xsi:type="dc:Point" x="864" y="-280" />
+        <di:waypoint xsi:type="dc:Point" x="783" y="-280" />
+        <di:waypoint xsi:type="dc:Point" x="783" y="-294" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0e6ydjq_di" bpmnElement="EndEvent_Msg_Fuhrpark">
+        <dc:Bounds x="1630" y="-217" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1681" y="-205" width="88" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SendTask_0tqgxoh_di" bpmnElement="SendTask_Mitarbeiter_ReisekostenabrAnfordern">
+        <dc:Bounds x="1576" y="1229" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

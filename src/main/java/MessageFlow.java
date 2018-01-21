@@ -36,12 +36,37 @@ public class MessageFlow implements JavaDelegate{
             case "ServiceTask_Manager_AntrasstatusAendern":
                 sendMessage = "Message_Manager_AntragsstatusAendern";
                 processVariablesToInsert.put("REQUEST_STATE", "PROCESSING");
-/*                setProcessVariables(execution,processVariablesToInsert);
-                sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);*/
-//                sendMessageWithSpecificVariables(execution, sendMessage, processVariablesToInsert, E_EventType.INTERMEDIATE_THROW_EVENT);
+                setProcessVariables(execution,processVariablesToInsert);
+                sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);
                 break;
             case "UserTask_Manager_BudgetPruefen":
                 completeTaskWithAllVariables(execution,"Task_Engine_BudgetPruefen", "Process_EngineID");
+                break;
+            case "SendTask_Engine_Abgelehnt":
+                sendMessage = "Message_Engine_AblehnungSenden";
+                processVariablesToInsert.put("REQUEST_STATE", "DECLINED");
+                setProcessVariables(execution,processVariablesToInsert);
+                sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);
+                break;
+            case "UserTask_Engine_AutoBereitstellen":
+                sendMessage = "Message_Engine_AutoBereitstellen";
+                sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);
+                break;
+            case "EndEvent_Msg_Fuhrpark":
+                completeTaskWithAllVariables(execution,"UserTask_Engine_AutoBereitstellen", "Process_EngineID");
+                break;
+            case "SendTask_Engine_Bestaetigt":
+                sendMessage = "Message_Engine_BestaetigungSenden";
+                processVariablesToInsert.put("REQUEST_STATE", "APPROVED");
+                sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);
+                break;
+            case "IntermediateThrowEvent_DauerGeschaeftsreise":
+                processVariablesToInsert.put("TRIP_TOREVIEW", true);
+                setProcessVariables(execution,processVariablesToInsert);
+                break;
+            case "SendTask_Mitarbeiter_ReisekostenabrAnfordern":
+                sendMessage = "Message_Mitarbeiter_Reisekostenabrechnung";
+                sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);
                 break;
 
         }
