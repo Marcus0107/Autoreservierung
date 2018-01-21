@@ -104,6 +104,12 @@ public class MessageFlow implements JavaDelegate{
                 runtimeService.correlateMessage(sendMessage, execution.getProcessBusinessKey(), getProcessVariables(execution));
                 break;
         }
+        try {
+            Mail m = new Mail();
+            m.test();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendMessageWithSpecificVariables(DelegateExecution execution, String sendMessage, Map<String,Object> specificProcessVariablesToInsert, E_EventType eventType){

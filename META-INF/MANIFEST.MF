@@ -1,4 +1,3 @@
 Manifest-Version: 1.0
-Class-Path: C:\Users\Informatik\Documents\Java\Workspace\Autoreservier
- ung\src\main\java\Main.java
+Class-Path: C:\Users\Informatik\Documents\Java\Workspace\Autoreservierung\src\main\java\Main.java
 
