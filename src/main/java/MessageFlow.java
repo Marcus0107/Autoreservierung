@@ -9,6 +9,8 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.task.Task;
 
+import javax.xml.ws.Service;
+
 
 public class MessageFlow implements JavaDelegate{
 
@@ -20,6 +22,7 @@ public class MessageFlow implements JavaDelegate{
 
         Map<String,Object> processVariablesToInsert = new TreeMap<String,Object>();
         String sendMessage;
+        Mail mail = new Mail();
 
         switch (execution.getCurrentActivityId()){
             case "UserTask_Mitarbeiter_AntragAusfuellen":
@@ -68,7 +71,14 @@ public class MessageFlow implements JavaDelegate{
                 sendMessage = "Message_Mitarbeiter_Reisekostenabrechnung";
                 sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);
                 break;
-
+            case "ServiceTask_Reisekostenabrechnung":
+                String email =execution.getVariable("EMAIL").toString();
+                String start = execution.getVariable("CONTRACT_START_DATE").toString();
+                String end = execution.getVariable("CONTRACT_END_DATE").toString();
+                String customer = execution.getVariable("CUSTOMER_NAME").toString();
+                String employeeId = execution.getVariable("EMPLOYEE_ID").toString();
+                mail.sendMailTo(email,customer,start,end,employeeId);
+                break;
         }
 
         Map<String,Object> processVariables = execution.getVariables();
@@ -103,12 +113,6 @@ public class MessageFlow implements JavaDelegate{
             case INTERMEDIATE_THROW_EVENT:
                 runtimeService.correlateMessage(sendMessage, execution.getProcessBusinessKey(), getProcessVariables(execution));
                 break;
-        }
-        try {
-            Mail m = new Mail();
-            m.test();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
