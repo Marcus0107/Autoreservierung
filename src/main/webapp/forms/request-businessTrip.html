@@ -3,17 +3,49 @@
     <label for="employeeId">Employee ID</label>
     <div class="controls">
     <input class="form-control"
+           required
            cam-variable-type="String"
            cam-variable-name="EMPLOYEE_ID"
            name="employeeId" />
     </div>
   </div>
 
+  <div class="form-group">
+    <label for="employeeId">Employee Email:</label>
+    <div class="controls">
+      <input class="form-control"
+             required
+             cam-variable-type="String"
+             cam-variable-name="EMAIL"
+             name="employeeId" />
+    </div>
+  </div>
+
+
+  <div class="input-group">
+    <label for="customerName">Customer:</label>
+    <div class="controls">
+      <select class="form-control"
+              required
+              cam-variable-type="String"
+              cam-variable-name="CUSTOMER_NAME"
+              cam-choices="AVAILABLE_CUSTOMER">
+        <option value="SAP">SAP</option>
+        <option value="AUDI">AUDI</option>
+        <option value="Hochschule Reutlingen">Hochschule Reutlingen</option>
+        <option value="Air Berlin">Air Berlin</option>
+      </select>
+    </div>
+  </div>
+
+<!--ToDo: email txt-->
 
   <div class="input-group">
     <label for="startDate">Start Date:</label>
     <div class="controls">
-    <input type="text"
+    <input class="form-control"
+           required
+           type="text"
            cam-variable-type="Date"
            cam-variable-name="CONTRACT_START_DATE"
            class="form-control"
@@ -35,7 +67,9 @@
   <div class="input-group">
     <label for="endDate">End Date:</label>
     <div class="controls">
-    <input type="text"
+    <input class="form-control"
+           required
+           type="text"
            cam-variable-type="Date"
            cam-variable-name="CONTRACT_END_DATE"
            class="form-control"
@@ -78,7 +112,9 @@
   <div class="input-group">
   <label for="carType">Car Type:</label>
   <div class="controls">
-  <select required
+  <select class="form-control"
+          required
+          type="text"
           cam-variable-type="String"
           cam-variable-name="CAR_TYPE"
           cam-choices="AVAILABLE_CAR_TYPES">

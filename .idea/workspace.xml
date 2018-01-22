@@ -6,9 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c8e447b-55a6-4751-bbed-95e6fc2dff60" name="Default" comment="implementation of Start_ + Intermediate_Catch_Event and user task completion&#10;&#10;ToDo:&#10;1) Task selection by business key fails&#10;&#10;2) Create and Send Reisekostenabrechnung">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="2c8e447b-55a6-4751-bbed-95e6fc2dff60" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,14 +17,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MessageFlow.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MessageFlow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/MessageFlow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="639">
-              <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+            <state relative-caret-position="255">
+              <caret line="73" column="51" lean-forward="false" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="51" />
               <folding>
                 <element signature="method#sendMessageWithSpecificVariables#0;class#MessageFlow#0" expanded="false" />
                 <element signature="method#sendMessageOnly#0;class#MessageFlow#0" expanded="false" />
+                <element signature="method#completeTaskWithAllVariables#0;class#MessageFlow#0" expanded="false" />
                 <element signature="method#completeTaskWithSpecificVariables#0;class#MessageFlow#0" expanded="false" />
                 <element signature="method#completeTaskOnly#0;class#MessageFlow#0" expanded="false" />
                 <element signature="method#getProcessVariables#0;class#MessageFlow#0" expanded="false" />
@@ -51,22 +50,17 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
               <caret line="7" column="0" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="8" selection-end-column="8" />
-              <folding>
-                <marker date="1516617603015" expanded="true" signature="247:277" ph="..." />
-                <marker date="1516617603015" expanded="true" signature="247:286" ph="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="review-businessTrip.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="review-businessTrip.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/review-businessTrip.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="-629">
               <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
-              <folding>
-                <marker date="1516617602978" expanded="true" signature="316:1048" ph="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -86,7 +80,7 @@
       <file leaf-file-name="approve-carReservation.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/approve-carReservation.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
+            <state relative-caret-position="357">
               <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="32" />
               <folding />
             </state>
@@ -154,8 +148,8 @@
         <option value="$PROJECT_DIR$/src/main/webapp/forms/approve-costCenterBooking.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/forms/review-businessTrip.html" />
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/MessageFlow.java" />
         <option value="$PROJECT_DIR$/src/main/java/Mail.java" />
+        <option value="$PROJECT_DIR$/src/main/java/MessageFlow.java" />
       </list>
     </option>
   </component>
@@ -173,10 +167,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="260" />
-    <option name="y" value="20" />
-    <option name="width" value="1400" />
-    <option name="height" value="990" />
+    <option name="x" value="331" />
+    <option name="y" value="277" />
+    <option name="width" value="1507" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -641,18 +635,31 @@
       <option name="project" value="LOCAL" />
       <updated>1516536429899</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="test">
+      <created>1516617655651</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1516617655651</updated>
+    </task>
+    <task id="LOCAL-00007" summary="BPMN update and final Message Flow">
+      <created>1516617998592</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1516617998592</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103387000" />
+    <option name="totallyTimeSpent" value="104266000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32838982" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32838982" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32838982" sideWeight="0.49791667" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -663,6 +670,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34851694" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -691,7 +699,6 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997722" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34851694" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -722,7 +729,9 @@
     <MESSAGE value="implementation of Start_ + Intermediate_Catch_Event and user task completion&#10;&#10;ToDo:&#10;1) Task selection by business key fails&#10;2) Triggering of EventBasedGateway_Mitarbeiter_1&#10;3) UserForm implementation of &quot;Autoverfügbarkeit prüfen&quot;&#10;4) Create and Send Reisekostenabrechnung" />
     <MESSAGE value="implementation of Start_ + Intermediate_Catch_Event and user task completion&#10;&#10;ToDo:&#10;1) Task selection by business key fails&#10;2) Create and Send Reisekostenabrechnung&#10;&#10;3) form: approve-costCenterBooking.html&#10;     --&gt; amount calculation angular doesn't work&#10;4) SubProzess: Externe Autovermietung&#10;5) Date Format trough REST API in web.xml" />
     <MESSAGE value="implementation of Start_ + Intermediate_Catch_Event and user task completion&#10;&#10;ToDo:&#10;1) Task selection by business key fails&#10;&#10;2) Create and Send Reisekostenabrechnung" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementation of Start_ + Intermediate_Catch_Event and user task completion&#10;&#10;ToDo:&#10;1) Task selection by business key fails&#10;&#10;2) Create and Send Reisekostenabrechnung" />
+    <MESSAGE value="test" />
+    <MESSAGE value="BPMN update and final Message Flow" />
+    <option name="LAST_COMMIT_MESSAGE" value="BPMN update and final Message Flow" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -746,6 +755,7 @@
           <folding>
             <element signature="method#sendMessageWithSpecificVariables#0;class#MessageFlow#0" expanded="false" />
             <element signature="method#sendMessageOnly#0;class#MessageFlow#0" expanded="false" />
+            <element signature="method#completeTaskWithAllVariables#0;class#MessageFlow#0" expanded="false" />
             <element signature="method#completeTaskWithSpecificVariables#0;class#MessageFlow#0" expanded="false" />
             <element signature="method#completeTaskOnly#0;class#MessageFlow#0" expanded="false" />
             <element signature="method#getProcessVariables#0;class#MessageFlow#0" expanded="false" />
@@ -982,25 +992,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/view-businessTrip.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="8" selection-end-column="8" />
-          <folding>
-            <marker date="1516617603015" expanded="true" signature="247:277" ph="..." />
-            <marker date="1516617603015" expanded="true" signature="247:286" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/approve-businessTrip.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/approve-costCenterBooking.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1015,24 +1006,6 @@
           <caret line="8" column="10" lean-forward="false" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
           <folding>
             <marker date="1516617602948" expanded="true" signature="2331:2626" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/approve-carReservation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/review-businessTrip.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
-          <folding>
-            <marker date="1516617602978" expanded="true" signature="316:1048" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1078,16 +1051,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/MessageFlow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="639">
-          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+        <state relative-caret-position="255">
+          <caret line="73" column="51" lean-forward="false" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="51" />
           <folding>
             <element signature="method#sendMessageWithSpecificVariables#0;class#MessageFlow#0" expanded="false" />
             <element signature="method#sendMessageOnly#0;class#MessageFlow#0" expanded="false" />
+            <element signature="method#completeTaskWithAllVariables#0;class#MessageFlow#0" expanded="false" />
             <element signature="method#completeTaskWithSpecificVariables#0;class#MessageFlow#0" expanded="false" />
             <element signature="method#completeTaskOnly#0;class#MessageFlow#0" expanded="false" />
             <element signature="method#getProcessVariables#0;class#MessageFlow#0" expanded="false" />
             <element signature="method#setProcessVariables#0;class#MessageFlow#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/approve-businessTrip.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/approve-carReservation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/view-businessTrip.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="8" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/forms/review-businessTrip.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-629">
+          <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>

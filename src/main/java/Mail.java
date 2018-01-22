@@ -10,9 +10,9 @@ public class Mail {
     private static final String SMTP_HOST_NAME = "smtp.gmail.com";
     private static final int SMTP_HOST_PORT = 465;
     private static final String SMTP_AUTH_USER = "bpm.mail.sender@gmail.com";
-    private static final String SMTP_AUTH_PWD = "start12345";
+    private static final String SMTP_AUTH_PWD  = "start12345";
 
-    public void sendMailTo(String receiver, String customer, String start, String end, String employeeId) throws Exception {
+    public void test() throws Exception{
         Properties props = new Properties();
 
         props.put("mail.transport.protocol", "smtps");
@@ -25,12 +25,11 @@ public class Mail {
         Transport transport = mailSession.getTransport();
 
         MimeMessage message = new MimeMessage(mailSession);
-        message.setSubject("Sie haben eine neue Reisekostenabrechnung für den Customer " + customer + " von " + employeeId);
-        message.setContent("Sehr geehrter Herr Demo, \nHerr Demo hat eine neue Reisenkostenabrechnung abgegeben für den Zeitraum vom "
-                +start +" bis "+ end + "\n Diese E-Mail ist automatisch generiert.", "text/plain");
+        message.setSubject("Testing SMTP-SSL");
+        message.setContent("This is a test", "text/plain");
 
         message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress(receiver));
+                new InternetAddress("danzer.marcus@gmail.com"));
 
         transport.connect
                 (SMTP_HOST_NAME, SMTP_HOST_PORT, SMTP_AUTH_USER, SMTP_AUTH_PWD);
