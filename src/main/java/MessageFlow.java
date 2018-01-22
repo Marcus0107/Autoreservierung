@@ -42,7 +42,7 @@ public class MessageFlow implements JavaDelegate{
                 setProcessVariables(execution,processVariablesToInsert);
                 sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);
                 break;
-            case "UserTask_Manager_BudgetPruefen":
+            case "BusinessRule_Manager_BudgetPruefen":
                 completeTaskWithAllVariables(execution,"Task_Engine_BudgetPruefen", "Process_EngineID");
                 break;
             case "SendTask_Engine_Abgelehnt":
@@ -78,6 +78,10 @@ public class MessageFlow implements JavaDelegate{
                 String customer = execution.getVariable("CUSTOMER_NAME").toString();
                 String employeeId = execution.getVariable("EMPLOYEE_ID").toString();
                 mail.sendMailTo(email,customer,start,end,employeeId);
+                break;
+            case "SendTask_Engine_ReisekostenabrSenden":
+                sendMessage = "Message_Engine_Reisekostenabrechnung";
+                sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);
                 break;
         }
 
