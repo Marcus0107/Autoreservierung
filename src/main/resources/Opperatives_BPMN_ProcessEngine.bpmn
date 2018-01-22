@@ -96,7 +96,7 @@
         <bpmn:flowNodeRef>ExclusiveGateway_03q5cce</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_1nz3t0n</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>SendTask_Engine_Bestaetigt</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1ocuci2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_1ocuci2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_05108cj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateCatchEvent_Msg_AbrechnungAnforderung</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>SendTask_SendTask_Engine_ReisekostenabrSenden</bpmn:flowNodeRef>
@@ -147,15 +147,15 @@
       <bpmn:incoming>SequenceFlow_0w6h04k</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0b5brx1</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:serviceTask id="Task_1ocuci2" name="Reisekosten-abrechnung erzeugen" camunda:delegateExpression="&#34;ToDo: Generate Reisekosenabrechnung&#34;">
+    <bpmn:serviceTask id="ServiceTask_1ocuci2" name="Reisekosten-abrechnung erzeugen" camunda:delegateExpression="&#34;ToDo: Generate Reisekosenabrechnung&#34;">
       <bpmn:incoming>SequenceFlow_0e3wqx8</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0nt5xq0</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="EndEvent_05108cj" name="Antrag abgeschlossen">
       <bpmn:incoming>SequenceFlow_19qo0te</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0e3wqx8" sourceRef="IntermediateCatchEvent_Msg_AbrechnungAnforderung" targetRef="Task_1ocuci2" />
-    <bpmn:sequenceFlow id="SequenceFlow_0nt5xq0" sourceRef="Task_1ocuci2" targetRef="SendTask_SendTask_Engine_ReisekostenabrSenden" />
+    <bpmn:sequenceFlow id="SequenceFlow_0e3wqx8" sourceRef="IntermediateCatchEvent_Msg_AbrechnungAnforderung" targetRef="ServiceTask_1ocuci2" />
+    <bpmn:sequenceFlow id="SequenceFlow_0nt5xq0" sourceRef="ServiceTask_1ocuci2" targetRef="SendTask_SendTask_Engine_ReisekostenabrSenden" />
     <bpmn:sequenceFlow id="SequenceFlow_19qo0te" sourceRef="SendTask_SendTask_Engine_ReisekostenabrSenden" targetRef="EndEvent_05108cj" />
     <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_Msg_AbrechnungAnforderung" name="Reisekosten-abrechnung angefordert">
       <bpmn:incoming>SequenceFlow_0b5brx1</bpmn:incoming>
@@ -725,7 +725,7 @@
       <bpmndi:BPMNShape id="SubProcess_1oluo6r_di" bpmnElement="Task_0dodlkm">
         <dc:Bounds x="1076" y="-178" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_1ji7p1u_di" bpmnElement="Task_1ocuci2">
+      <bpmndi:BPMNShape id="ServiceTask_1ji7p1u_di" bpmnElement="ServiceTask_1ocuci2">
         <dc:Bounds x="1544" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_0i8ulqx_di" bpmnElement="Task_0i8ulqx">
