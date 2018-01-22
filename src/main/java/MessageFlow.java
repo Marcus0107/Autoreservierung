@@ -79,6 +79,10 @@ public class MessageFlow implements JavaDelegate{
                 String employeeId = execution.getVariable("EMPLOYEE_ID").toString();
                 mail.sendMailTo(email,customer,start,end,employeeId);
                 break;
+            case "SendTask_SendTask_Engine_ReisekostenabrSenden":
+                sendMessage = "Message_Engine_Reisekostenabrechnung";
+                sendMessageWithAllVariables(execution, sendMessage, E_EventType.INTERMEDIATE_THROW_EVENT);
+                break;
         }
 
         Map<String,Object> processVariables = execution.getVariables();
