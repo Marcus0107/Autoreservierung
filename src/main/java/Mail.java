@@ -3,6 +3,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import java.util.Properties;
+import java.util.logging.Logger;
 
 
 public class Mail {
@@ -12,7 +13,7 @@ public class Mail {
     private static final String SMTP_AUTH_USER = "bpm.mail.sender@gmail.com";
     private static final String SMTP_AUTH_PWD  = "start12345";
 
-    public void test() throws Exception{
+    public void sendMailTo(String receiver, String customer, String start, String end, String employeeId) throws Exception {
         Properties props = new Properties();
 
         props.put("mail.transport.protocol", "smtps");
@@ -25,11 +26,24 @@ public class Mail {
         Transport transport = mailSession.getTransport();
 
         MimeMessage message = new MimeMessage(mailSession);
-        message.setSubject("Testing SMTP-SSL");
-        message.setContent("This is a test", "text/plain");
+
+        message.setSubject("Sie haben eine neue Reisekostenabrechnung für den Customer " + customer + " von " + employeeId);
+        message.setContent("test", "text/plain");
+
+        final Logger LOGGER = Logger.getAnonymousLogger();
+
+        LOGGER.info("\n\n  EMAIL LOGGING " +
+                        "\nresiver: " + receiver +
+                        "\ncustomer: " + customer +
+                        "\nemployeeId: " + employeeId  );
+
+
+/*        message.setSubject("Sie haben eine neue Reisekostenabrechnung für den Customer " + customer + " von " + employeeId);
+        message.setContent("Sehr geehrter Herr Demo, \nHerr Demo hat eine neue Reisenkostenabrechnung abgegeben für den Zeitraum vom "
+                +start +" bis "+ end + "\n Diese E-Mail ist automatisch generiert.", "text/plain");*/
 
         message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress("danzer.marcus@gmail.com"));
+                new InternetAddress(receiver));
 
         transport.connect
                 (SMTP_HOST_NAME, SMTP_HOST_PORT, SMTP_AUTH_USER, SMTP_AUTH_PWD);
