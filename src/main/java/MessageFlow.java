@@ -151,8 +151,8 @@ public class MessageFlow implements JavaDelegate{
 
 
         Task task = taskService.createTaskQuery()
-                .active()
                 .caseInstanceBusinessKeyLike(execution.getProcessBusinessKey())
+                .active()
                 .taskDefinitionKey(taskID)
                 .singleResult();
 
