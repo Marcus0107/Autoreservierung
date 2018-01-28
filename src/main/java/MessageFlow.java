@@ -9,12 +9,8 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.task.Task;
 
-import javax.xml.ws.Service;
-
 
 public class MessageFlow implements JavaDelegate{
-
-
 
     private final Logger LOGGER = Logger.getAnonymousLogger();
 
@@ -90,9 +86,6 @@ public class MessageFlow implements JavaDelegate{
         );
 
 
-
-
-
         LOGGER.info("\n\n  ... LoggerDelegate invoked by "
                 + "processDefinitionId=" + execution.getProcessDefinitionId()
                 + ", activityId=" + execution.getCurrentActivityId()
@@ -119,7 +112,6 @@ public class MessageFlow implements JavaDelegate{
                 break;
         }
     }
-
     private void sendMessageWithSpecificVariables(DelegateExecution execution, String sendMessage, Map<String,Object> specificProcessVariablesToInsert, E_EventType eventType){
         RuntimeService runtimeService = execution.getProcessEngineServices().getRuntimeService();
 
@@ -132,7 +124,6 @@ public class MessageFlow implements JavaDelegate{
                 break;
         }
     }
-
     private void sendMessageOnly(DelegateExecution execution, String sendMessage, E_EventType eventType){
         RuntimeService runtimeService = execution.getProcessEngineServices().getRuntimeService();
 
@@ -146,9 +137,6 @@ public class MessageFlow implements JavaDelegate{
         TaskService taskService = execution.getProcessEngineServices().getTaskService();
 
 
-/*        Task task = taskService.createTaskQuery().taskDefinitionKey(taskID).singleResult();
-        LOGGER.info("Task ID:" + task +"\t Task Name: " + task.getName());*/
-
 
         Task task = taskService.createTaskQuery()
                 .caseInstanceBusinessKeyLike(execution.getProcessBusinessKey())
@@ -156,14 +144,11 @@ public class MessageFlow implements JavaDelegate{
                 .taskDefinitionKey(taskID)
                 .singleResult();
 
-
-
         try{
+//            ToDo: because method taskService.createTaskQuery().caseInstanceBusinessKeyLike is buggy, add businessKey of process as runtime variable
             LOGGER.info("\n------------------------- " + "activeTasks" + " -------------------------");
             LOGGER.info("\nTask Query:" + "BusinessKey:" + execution.getProcessBusinessKey() + "\tTaskDefinitionKey:" + taskID);
             LOGGER.info("Task ID: " + task.getId() + "\tTask Name:" +task.getName() +"\tProcess Instance ID:" +task.getProcessInstanceId());
-
-
 
         }catch (NullPointerException ne){
             LOGGER.info("no task for given criteria found: NullpointerException");
@@ -175,7 +160,7 @@ public class MessageFlow implements JavaDelegate{
                     .active()
                     .taskDefinitionKey(taskID)
                     .list()
-                    .forEach((t) -> LOGGER.info("Task ID: " + "\tTask Name:" +t.getName() +"\tProcess Instance ID:" +t.getProcessInstanceId() + "\tProcess Definition ID:" + t.getProcessDefinitionId() + "\n"));
+                    .forEach((t) -> LOGGER.info("Task ID: " + t.getId() + "\tTask Name:" +t.getName() +"\tProcess Instance ID:" +t.getProcessInstanceId() + "\tProcess Definition ID:" + t.getProcessDefinitionId() + "\n"));
         }catch (NullPointerException ne) {
             LOGGER.info("no task for given criteria found: EmptyList");
         }
@@ -189,14 +174,12 @@ public class MessageFlow implements JavaDelegate{
 
 
     }
-
     private void completeTaskWithSpecificVariables(DelegateExecution execution, String taskID, Map<String,Object> specificProcessVariables){
         RuntimeService runtimeService = execution.getProcessEngineServices().getRuntimeService();
         TaskService taskService = execution.getProcessEngineServices().getTaskService();
 
         taskService.complete(taskID, specificProcessVariables);
     }
-
     private void completeTaskOnly(DelegateExecution execution, String taskID){
         TaskService taskService = execution.getProcessEngineServices().getTaskService();
 
@@ -213,7 +196,6 @@ public class MessageFlow implements JavaDelegate{
 
         return processVariables;
     }
-
     private void setProcessVariables(DelegateExecution execution, Map<String,Object> processVariablesToInsert){
         //      Create runtime variables
         processVariablesToInsert.forEach((s,o) -> execution.setVariable(s, o));
